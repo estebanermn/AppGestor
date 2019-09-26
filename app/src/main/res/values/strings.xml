@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Xplora</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_pdv">Puntos de venta</string>
+    <string name="menu_salir">Salir</string>
+    <string name="txt_version_app">v.2.0.0</string>
+    <string name="txt_name_app">Xplora</string>
+    <string name="txt_title_login_app">APP GESTOR</string>
+    <string name="btn_ingresar_login">Ingresar</string>
+</resources>
