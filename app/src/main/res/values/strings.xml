@@ -6,7 +6,12 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
+
     <string name="action_settings">Settings</string>
+
+    <string name="action_add_tienda">Nueva tienda</string>
+    <string name="action_edit_tienda">Editar tienda</string>
+
 
     <string name="menu_pdv">Puntos de venta</string>
     <string name="menu_salir">Salir</string>
@@ -14,4 +19,17 @@
     <string name="txt_name_app">Xplora</string>
     <string name="txt_title_login_app">APP GESTOR</string>
     <string name="btn_ingresar_login">Ingresar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="edt_nombre_tienda">Nombre:</string>
+    <string name="edt_direccion_tienda">Dirección:</string>
+    <string name="btn_guardar_tienda">Guardar</string>
+    <string name="txt_reporte_precios">Reporte de Precios</string>
+    <string name="txt_sku_precio">SKU</string>
+    <string name="txt_costo_precio">P.
+        Costo</string>
+    <string name="txt_rvta_precio">P. Rvta Mayor</string>
+    <string name="txt_stock_precio">Stock</string>
 </resources>

@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <Button
         android:id="@+id/btnIngresar"
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.637" />
 
     <EditText
-        android:id="@+id/edtUsuario"
+        android:id="@+id/edtUsername"
         android:layout_width="288dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
@@ -102,9 +102,17 @@
         android:layout_marginBottom="28dp"
         android:text="@string/txt_version_app"
         android:textSize="14dp"
-        app:layout_constraintBottom_toTopOf="@+id/edtUsuario"
+        app:layout_constraintBottom_toTopOf="@+id/edtUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnRegistrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrar"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="494dp" />
 
 </android.support.constraint.ConstraintLayout>
