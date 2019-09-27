@@ -12,6 +12,23 @@ public class Producto {
     public Producto() {
     }
 
+    public Producto(int productoId, String sku, double precioCosto, double precioRvta, int stock, int tiendaId) {
+        this.productoId = productoId;
+        this.sku = sku;
+        this.precioCosto = precioCosto;
+        this.precioRvta = precioRvta;
+        this.stock = stock;
+        this.tiendaId = tiendaId;
+    }
+
+    public Producto(int productoId, String sku, double precioCosto, double precioRvta, int stock) {
+        this.productoId = productoId;
+        this.sku = sku;
+        this.precioCosto = precioCosto;
+        this.precioRvta = precioRvta;
+        this.stock = stock;
+    }
+
     public int getProductoId() {
         return productoId;
     }

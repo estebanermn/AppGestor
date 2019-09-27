@@ -1,44 +1,44 @@
 package pe.lucky.xplora.activity;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pe.lucky.xplora.DataBaseHelper;
 import pe.lucky.xplora.R;
 import pe.lucky.xplora.adapter.ItemClickListener;
 import pe.lucky.xplora.adapter.ProductoAdapter;
 import pe.lucky.xplora.model.Producto;
-import pe.lucky.xplora.util.Constantes;
+import pe.lucky.xplora.sqlite.ProductoSQL;
 
 import static android.support.constraint.Constraints.TAG;
 
 public class ProductoFragment extends Fragment {
 
     TextView edtSku, edtPrecioCosto, edtPrecioRvta, edtStock;
-    private Toolbar mTopToolbar;
 
     private List<Producto> listProducto;
     RecyclerView recyclerViewProducto;
     private ProductoAdapter adapter;
 
-    DataBaseHelper conn;
 
     public ProductoFragment() {
     }
@@ -53,12 +53,9 @@ public class ProductoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setHasOptionsMenu(true);
         initView(view);
         initObjects();
-//        mTopToolbar = view.findViewById(R.id.toolbar);
-//        setSupportActionBar(mTopToolbar);
-//        getSupportActionBar().setTitle("Precios");
-
     }
 
     private void initView(View view) {
@@ -69,7 +66,7 @@ public class ProductoFragment extends Fragment {
 
         recyclerViewProducto = view.findViewById(R.id.recyclerViewPrecio);
 
-        ((NavigationActivity) getActivity()).getSupportActionBar().setTitle("Your Title");
+        ((NavigationActivity) getActivity()).getSupportActionBar().setTitle("Precios");
 
     }
 
@@ -85,88 +82,76 @@ public class ProductoFragment extends Fragment {
 
         adapter = new ProductoAdapter(listProducto, new ItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(View v, final int position) {
                 Log.d(TAG, "clicked position:" + position);
-                long postId = listProducto.get(position).getProductoId();
-//                Intent intent = new Intent(getContext(), ProductoActivity.class);
-//                getContext().startActivity(intent);
+                final Producto producto = listProducto.get(position);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Acción");
+                builder.setMessage("¿Qué desea hacer?");
+                builder.setPositiveButton("Actualizar",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getContext(), ProductoFormActivity.class);
+                                intent.putExtra("productoId", producto.getProductoId());
+                                System.out.println("id: " + producto.getProductoId());
+                                Toast.makeText(getContext(), "Producto:" + producto.getSku(), Toast.LENGTH_LONG).show();
+//                                intent.putExtra("tiendaId", producto.getTiendaId());
+                                getContext().startActivity(intent);
+                            }
+                        });
+                builder.setNegativeButton("Eliminar",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ProductoSQL productoSQL = new ProductoSQL(getContext());
+                                productoSQL.eliminarProducto(producto.getProductoId());
+                                listProducto.remove(position);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                builder.setNeutralButton("Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                builder.show();
+
             }
         });
 
         recyclerViewProducto.setAdapter(adapter);
 
 
-        conn = new DataBaseHelper(getContext(), DataBaseHelper.DATABASE_NAME,
-                null, DataBaseHelper.DATABASE_VERSION);
-
-        showProductoList();
-
     }
 
-    private void showProductoList() {
-        // AsyncTask is used that SQLite operation not blocks the UI Thread.
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                listProducto.clear();
-                listProducto.addAll(getAllProducto());
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                adapter.notifyDataSetChanged();
-            }
-        }.execute();
+    @Override
+    public void onStart() {
+        super.onStart();
+        ProductoSQL productoSQL = new ProductoSQL(getContext());
+        adapter.agregar(productoSQL.listarProducto());
     }
 
-    public List<Producto> getAllProducto() {
-        // array of columns to fetch
-        String[] columns = {
-                Constantes.COLUMN_PRODUCTO_ID,
-                Constantes.COLUMN_PRODUCTO_SKU,
-                Constantes.COLUMN_PRODUCTO_PRECIO_COSTO,
-                Constantes.COLUMN_PRODUCTO_PRECIO_RVTA,
-                Constantes.COLUMN_PRODUCTO_STOCK,
-                Constantes.COLUMN_PRODUCTO_TIENDA_ID
-        };
-        // sorting orders
-        String sortOrder =
-                Constantes.COLUMN_PRODUCTO_SKU + " ASC";
-        List<Producto> productoList = new ArrayList<Producto>();
 
-        SQLiteDatabase db = conn.getReadableDatabase();
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.add_producto, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-        Cursor cursor = db.query(Constantes.TABLE_PRODUCTO, //Table to query
-                columns,    //columns to return
-                null,        //columns for the WHERE clause
-                null,        //The values for the WHERE clause
-                null,       //group the rows
-                null,       //filter by row groups
-                sortOrder); //The sort order
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
 
-
-        // Traversing through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Producto producto = new Producto();
-                producto.setProductoId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constantes.COLUMN_PRODUCTO_ID))));
-                producto.setSku(cursor.getString(cursor.getColumnIndex(Constantes.COLUMN_PRODUCTO_SKU)));
-                producto.setPrecioCosto(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Constantes.COLUMN_PRODUCTO_PRECIO_COSTO))));
-                producto.setPrecioRvta(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Constantes.COLUMN_PRODUCTO_PRECIO_RVTA))));
-                producto.setStock(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constantes.COLUMN_PRODUCTO_STOCK))));
-                producto.setTiendaId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constantes.COLUMN_PRODUCTO_TIENDA_ID))));
-
-                // Adding user record to list
-                productoList.add(producto);
-            } while (cursor.moveToNext());
+            case R.id.item_add_producto:
+                Intent intent = new Intent(getContext(), ProductoFormActivity.class);
+                getContext().startActivity(intent);
+                return true;
         }
-        cursor.close();
-        db.close();
-
-        return productoList;
+        return false;
     }
 
 

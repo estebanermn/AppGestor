@@ -10,8 +10,13 @@
     <string name="action_settings">Settings</string>
 
     <string name="action_add_tienda">Nueva tienda</string>
-    <string name="action_edit_tienda">Editar tienda</string>
+    <string name="action_edit_tienda">Editar</string>
+    <string name="action_delete_tienda">Elimnar</string>
 
+
+    <string name="action_add_producto">Nuevo producto</string>
+    <string name="action_edit_producto">Editar</string>
+    <string name="action_delete_producto">Elimnar</string>
 
     <string name="menu_pdv">Puntos de venta</string>
     <string name="menu_salir">Salir</string>
@@ -27,9 +32,10 @@
     <string name="edt_direccion_tienda">Dirección:</string>
     <string name="btn_guardar_tienda">Guardar</string>
     <string name="txt_reporte_precios">Reporte de Precios</string>
+
     <string name="txt_sku_precio">SKU</string>
-    <string name="txt_costo_precio">P.
-        Costo</string>
+    <string name="txt_costo_precio">P. Costo</string>
     <string name="txt_rvta_precio">P. Rvta Mayor</string>
     <string name="txt_stock_precio">Stock</string>
+
 </resources>

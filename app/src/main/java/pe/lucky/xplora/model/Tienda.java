@@ -8,20 +8,13 @@ public class Tienda {
     private String latitud;
     private String longitud;
 
+
     public Tienda(int tiendaId, String nombre, String direccion, String latitud, String longitud) {
         this.tiendaId = tiendaId;
         this.nombre = nombre;
         this.direccion = direccion;
         this.latitud = latitud;
         this.longitud = longitud;
-    }
-
-    public Tienda() {
-    }
-
-    public Tienda(String nombre, String direccion) {
-        this.nombre = nombre;
-        this.direccion = direccion;
     }
 
     public int getTiendaId() {

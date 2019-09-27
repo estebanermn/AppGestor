@@ -2,10 +2,7 @@ package pe.lucky.xplora.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,12 +25,12 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import pe.lucky.xplora.DataBaseHelper;
+import pe.lucky.xplora.sqlite.DataBaseHelper;
 import pe.lucky.xplora.R;
 import pe.lucky.xplora.adapter.ItemClickListener;
 import pe.lucky.xplora.adapter.TiendaAdapter;
 import pe.lucky.xplora.model.Tienda;
-import pe.lucky.xplora.util.Constantes;
+import pe.lucky.xplora.sqlite.TiendaSQL;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -94,7 +91,6 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
 
         recyclerViewTienda = view.findViewById(R.id.recyclerViewTienda);
         initObjects();
-        showTiendaList();
 
     }
 
@@ -121,10 +117,6 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
 
         recyclerViewTienda.setAdapter(adapter);
 
-        conn = new DataBaseHelper(getActivity().getApplicationContext(), DataBaseHelper.DATABASE_NAME,
-                null, DataBaseHelper.DATABASE_VERSION);
-
-        showTiendaList();
     }
 
     private void replaceFragment() {
@@ -139,65 +131,11 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
-    private void showTiendaList() {
-        // AsyncTask is used that SQLite operation not blocks the UI Thread.
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                listTienda.clear();
-                listTienda.addAll(getAllTienda());
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                adapter.notifyDataSetChanged();
-            }
-        }.execute();
-    }
-
-    public List<Tienda> getAllTienda() {
-        // array of columns to fetch
-        String[] columns = {
-                Constantes.COLUMN_TIENDA_ID,
-                Constantes.COLUMN_TIENDA_NOMBRE,
-                Constantes.COLUMN_TIENDA_DIRECCION
-
-        };
-        // sorting orders
-        String sortOrder =
-                Constantes.COLUMN_TIENDA_NOMBRE + " ASC";
-        List<Tienda> tiendaList = new ArrayList<Tienda>();
-
-        SQLiteDatabase db = conn.getReadableDatabase();
-
-        Cursor cursor = db.query(Constantes.TABLE_TIENDA, //Table to query
-                columns,    //columns to return
-                null,        //columns for the WHERE clause
-                null,        //The values for the WHERE clause
-                null,       //group the rows
-                null,       //filter by row groups
-                sortOrder); //The sort order
-
-
-        // Traversing through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Tienda tienda = new Tienda();
-                tienda.setTiendaId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constantes.COLUMN_TIENDA_ID))));
-                tienda.setNombre(cursor.getString(cursor.getColumnIndex(Constantes.COLUMN_TIENDA_NOMBRE)));
-                tienda.setDireccion(cursor.getString(cursor.getColumnIndex(Constantes.COLUMN_TIENDA_DIRECCION)));
-                // Adding user record to list
-                tiendaList.add(tienda);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-
-        return tiendaList;
+    @Override
+    public void onStart() {
+        super.onStart();
+        TiendaSQL tiendaSQL = new TiendaSQL(getContext());
+        adapter.agregar(tiendaSQL.listarTienda());
     }
 
     @Override

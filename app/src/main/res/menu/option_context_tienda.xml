@@ -4,4 +4,9 @@
     <item
         android:id="@+id/edit_tienda"
         android:title="@string/action_edit_tienda" />
+
+    <item
+        android:id="@+id/delete_tienda"
+        android:title="@string/action_delete_tienda" />
+
 </menu>

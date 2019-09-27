@@ -1,7 +1,6 @@
 package pe.lucky.xplora.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import pe.lucky.xplora.DataBaseHelper;
+import pe.lucky.xplora.sqlite.DataBaseHelper;
 import pe.lucky.xplora.R;
 import pe.lucky.xplora.model.Usuario;
 

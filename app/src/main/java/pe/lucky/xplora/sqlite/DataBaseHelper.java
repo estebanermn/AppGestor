@@ -1,4 +1,4 @@
-package pe.lucky.xplora;
+package pe.lucky.xplora.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -19,15 +19,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // Database Name
     public static final String DATABASE_NAME = "xplore.db";
 
-    public DataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
 
     @Override
@@ -42,7 +37,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("INSERT INTO " + Constantes.TABLE_PRODUCTO + " (sku, precioCosto, precioRvta, stock, tiendaId) VALUES ('Aceite Cilx12 Bot', 45.23, 45.23, 100, 1)");
 
-}
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -58,10 +53,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Usuario queryUser(String username, String password) {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Usuario usuario= null;
+        Usuario usuario = null;
 
         Cursor cursor = db.query(Constantes.TABLE_USER, new String[]{Constantes.COLUMN_USER_ID,
-                        Constantes.COLUMN_USER_NAME, Constantes.COLUMN_USER_PASSWORD}, Constantes.COLUMN_USER_NAME+ "=? and " + Constantes.COLUMN_USER_PASSWORD+ "=?",
+                        Constantes.COLUMN_USER_NAME, Constantes.COLUMN_USER_PASSWORD}, Constantes.COLUMN_USER_NAME + "=? and " + Constantes.COLUMN_USER_PASSWORD + "=?",
                 new String[]{username, password}, null, null, null, "1");
         if (cursor != null)
             cursor.moveToFirst();
@@ -97,7 +92,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close(); // Closing database connection
 
     }
-
 
 
 }

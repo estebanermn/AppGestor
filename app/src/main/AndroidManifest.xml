@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.TiendaFormActivity" />
+        <activity android:name=".activity.ProductoFormActivity" />
 
         <activity
             android:name=".activity.NavigationActivity"
@@ -24,6 +25,9 @@
         <activity android:name=".activity.MainActivity">
 
         </activity>
+
+
+
     </application>
 
 </manifest>

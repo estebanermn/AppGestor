@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pe.lucky.xplora.R;
@@ -18,13 +19,15 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
     List<Tienda> listTienda;
     ItemClickListener listener;
 
-    public TiendaAdapter(List<Tienda> listTienda) {
-        this.listTienda = listTienda;
-    }
-
     public TiendaAdapter(List<Tienda> listTienda, ItemClickListener listener) {
         this.listTienda = listTienda;
         this.listener = listener;
+    }
+
+    public void agregar(ArrayList<Tienda> tienda) {
+        listTienda.clear();
+        listTienda.addAll(tienda);
+        notifyDataSetChanged();
     }
 
     @NonNull

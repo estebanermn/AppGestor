@@ -6,12 +6,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pe.lucky.xplora.R;
 import pe.lucky.xplora.model.Producto;
+
 
 public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHolder> {
 
@@ -21,6 +24,12 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
     public ProductoAdapter(List<Producto> listProducto, ItemClickListener listener) {
         this.listProducto = listProducto;
         this.listener = listener;
+    }
+
+    public void agregar(ArrayList<Producto> producto) {
+        listProducto.clear();
+        listProducto.addAll(producto);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -38,17 +47,20 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         Producto producto = listProducto.get(position);
 
-        CharSequence precioCosto =  (CharSequence) String.valueOf(producto.getPrecioCosto());
-        CharSequence stock =  (CharSequence) String.valueOf(producto.getStock());
+        CharSequence precioCosto = (CharSequence) String.valueOf(producto.getPrecioCosto());
+        CharSequence precioRvta = (CharSequence) String.valueOf(producto.getPrecioRvta());
+        CharSequence stock = (CharSequence) String.valueOf(producto.getStock());
 
-        holder.sku.setText( (CharSequence) producto.getSku() );
+        holder.sku.setText((CharSequence) producto.getSku());
         holder.precioCosto.setText(precioCosto);
-        holder.precioRvta.setText( (CharSequence) producto.getSku() );
-        holder.stock.setText( stock );
+        holder.precioRvta.setText(precioRvta);
+        holder.stock.setText(stock);
+
+
     }
 
     @Override
