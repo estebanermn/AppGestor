@@ -107,12 +107,12 @@
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btnRegistrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registrar"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="494dp" />
+    <!--<Button-->
+        <!--android:id="@+id/btnRegistrar"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Registrar"-->
+        <!--tools:layout_editor_absoluteX="161dp"-->
+        <!--tools:layout_editor_absoluteY="494dp" />-->
 
 </android.support.constraint.ConstraintLayout>

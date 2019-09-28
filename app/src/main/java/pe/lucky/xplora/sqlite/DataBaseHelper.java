@@ -13,7 +13,7 @@ import pe.lucky.xplora.util.Constantes;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
 
-    public static final int DATABASE_VERSION = 20;
+    public static final int DATABASE_VERSION = 25;
     // Database Version
 
     // Database Name
@@ -32,10 +32,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(Constantes.CREATE_TIENDA_TABLE);
         db.execSQL(Constantes.CREATE_PRODUCTO_TABLE);
 
-        db.execSQL("INSERT INTO " + Constantes.TABLE_USER + " (username, password) VALUES ('admin', 'admin')");
+        db.execSQL("INSERT INTO " + Constantes.TABLE_USER + " (username, password, email, nombre) VALUES ('admin', 'admin' , 'antonioherrerau@gmail.com','Antonio Herrera Ubillus')");
+        db.execSQL("INSERT INTO " + Constantes.TABLE_USER + " (username, password, email, nombre) VALUES ('admin2', 'admin2' , 'estebanermn@gmail.com','Esteban Medina Napurí')");
 
-        db.execSQL("INSERT INTO " + Constantes.TABLE_TIENDA + " (nombre,direccion) VALUES ('Bodega Paquita', 'Av. Perú # 1350- San Martin de Porres')");
-        db.execSQL("INSERT INTO " + Constantes.TABLE_TIENDA + " (nombre,direccion) VALUES ('Metro Yzaguirre', 'Av. Perú # 2660- San Martin de Porres')");
+
+        db.execSQL("INSERT INTO " + Constantes.TABLE_TIENDA + " (nombre,direccion, latitud,longitud) VALUES ('Bodega Paquita', 'Av. Perú # 1350- San Martin de Porres', -12.0321695,-77.0608359)");
+        db.execSQL("INSERT INTO " + Constantes.TABLE_TIENDA + " (nombre,direccion,latitud,longitud) VALUES ('Metro Yzaguirre', 'Av. Perú # 2660- San Martin de Porres', -12.0316481,-77.0771404)");
 
         db.execSQL("INSERT INTO " + Constantes.TABLE_PRODUCTO + " (sku, precioCosto, precioRvta, stock, tiendaId) VALUES ('Aceite Cilx12 Bot', 45.23, 45.23, 100, 1)");
 
@@ -50,49 +52,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         // Create tables again
         onCreate(db);
-    }
-
-    public Usuario queryUser(String username, String password) {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Usuario usuario = null;
-
-        Cursor cursor = db.query(Constantes.TABLE_USER, new String[]{Constantes.COLUMN_USER_ID,
-                        Constantes.COLUMN_USER_NAME, Constantes.COLUMN_USER_PASSWORD}, Constantes.COLUMN_USER_NAME + "=? and " + Constantes.COLUMN_USER_PASSWORD + "=?",
-                new String[]{username, password}, null, null, null, "1");
-        if (cursor != null)
-            cursor.moveToFirst();
-        if (cursor != null && cursor.getCount() > 0) {
-            usuario = new Usuario(cursor.getString(1), cursor.getString(2));
-        }
-        // return user
-        return usuario;
-    }
-
-    public void addUser(Usuario usuario) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(Constantes.COLUMN_USER_NAME, usuario.getUsername());
-        values.put(Constantes.COLUMN_USER_PASSWORD, usuario.getPassword());
-
-        // Inserting Row
-        db.insert(Constantes.TABLE_USER, null, values);
-        db.close(); // Closing database connection
-
-    }
-
-    public void addTienda(Tienda tienda) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(Constantes.COLUMN_TIENDA_NOMBRE, tienda.getNombre());
-        values.put(Constantes.COLUMN_TIENDA_DIRECCION, tienda.getDireccion());
-
-        // Inserting Row
-        db.insert(Constantes.TABLE_TIENDA, null, values);
-        db.close(); // Closing database connection
-
     }
 
 

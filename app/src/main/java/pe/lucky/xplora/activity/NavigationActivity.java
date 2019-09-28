@@ -1,5 +1,6 @@
 package pe.lucky.xplora.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -11,17 +12,25 @@ import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 
 import pe.lucky.xplora.R;
+import pe.lucky.xplora.model.Usuario;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TiendaFragment.OnFragmentInteractionListener {
+
+    private NavigationView navigationView;
+    private TextView txtNombreUsuario, txtEmailUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -32,6 +41,19 @@ public class NavigationActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView( 0 );
+        txtNombreUsuario = (TextView) headerView.findViewById( R.id.txtNombreUsuario );
+        txtEmailUsuario = (TextView) headerView.findViewById( R.id.txtEmailUsuario );
+
+        Intent i = getIntent();
+        Usuario usuario = (Usuario) i.getSerializableExtra("usuario");
+
+        CharSequence nombre = (CharSequence) usuario.getNombre();
+        CharSequence email = (CharSequence) usuario.getEmail();
+
+        txtNombreUsuario.setText(nombre);
+        txtEmailUsuario.setText(email);
     }
 
     @Override

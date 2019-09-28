@@ -65,8 +65,7 @@ public class TiendaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Punto de Venta");
-        setHasOptionsMenu(true);
+
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -84,6 +83,8 @@ public class TiendaFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Punto de Venta");
 
         recyclerViewTienda = view.findViewById(R.id.recyclerViewTienda);
         initObjects();

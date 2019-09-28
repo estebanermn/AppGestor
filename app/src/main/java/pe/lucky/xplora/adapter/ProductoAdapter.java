@@ -58,8 +58,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         holder.precioCosto.setText(precioCosto);
         holder.precioRvta.setText(precioRvta);
         holder.stock.setText(stock);
-
-
     }
 
     @Override
@@ -83,6 +81,5 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         }
 
     }
-
 
 }

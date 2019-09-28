@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,13 +13,14 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import pe.lucky.xplora.R;
+import pe.lucky.xplora.model.Tienda;
+import pe.lucky.xplora.sqlite.TiendaSQL;
 
 public class MapsActivity extends Fragment implements OnMapReadyCallback {
 
@@ -40,14 +39,27 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
         return v;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+    }
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        TiendaSQL tiendaSQL = new TiendaSQL(getContext());
+        int tiendaId = getArguments().getInt("tiendaId");
+        Tienda tienda = tiendaSQL.getTiendaById(tiendaId);
+
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng latlng = new LatLng( tienda.getLatitud(), tienda.getLongitud());
+        mMap.addMarker(new MarkerOptions().position(latlng).title(tienda.getNombre()));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
     }
 
     @Override

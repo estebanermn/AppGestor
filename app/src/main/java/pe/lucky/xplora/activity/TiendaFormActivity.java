@@ -43,7 +43,7 @@ public class TiendaFormActivity extends AppCompatActivity {
                 String nombre = edtNombreTienda.getText().toString();
                 String direccion = edtDireccionTienda.getText().toString();
 
-                Tienda objTienda = new Tienda(0, nombre, direccion, "3", "4");
+                Tienda objTienda = new Tienda(0, nombre, direccion, 3, 4);
 
                 TiendaSQL tiendaSQL = new TiendaSQL(getApplicationContext());
                 int idTienda = (int) btnGuardarTienda.getTag();

@@ -1,5 +1,6 @@
 package pe.lucky.xplora.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import pe.lucky.xplora.sqlite.DataBaseHelper;
 import pe.lucky.xplora.R;
 import pe.lucky.xplora.model.Usuario;
+import pe.lucky.xplora.sqlite.UsuarioSQL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,22 +30,26 @@ public class MainActivity extends AppCompatActivity {
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         btnIngresar = findViewById(R.id.btnIngresar);
-        btnRegistrar = findViewById(R.id.btnRegistrar);
-
-        final DataBaseHelper dbHelper = new DataBaseHelper(this);
+//        btnRegistrar = findViewById(R.id.btnRegistrar);
 
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                UsuarioSQL usuarioSQL = new UsuarioSQL(getApplicationContext());
                 if (!emptyValidation()) {
-                    Usuario usuario = dbHelper.queryUser(edtUsername.getText().toString(), edtPassword.getText().toString());
+                    Usuario usuario = usuarioSQL.queryUser(edtUsername.getText().toString(), edtPassword.getText().toString());
                     if (usuario != null) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("usuario", usuario.getUsername());
+
+
                         Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
-                        intent.putExtras(bundle);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putSerializable("usuario", usuario);
+//                        intent.putExtras(bundle);
+                        intent.putExtra("usuario", usuario);
                         startActivity(intent);
-                        Toast.makeText(MainActivity.this, "Bienvenido" + usuario.getUsername(), Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(MainActivity.this, "Bienvenido " + usuario.getNombre(), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Usuario no encontrado" + usuario.getUsername(), Toast.LENGTH_SHORT).show();
                         edtPassword.setText("");
@@ -55,19 +61,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnRegistrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!emptyValidation()) {
-                    dbHelper.addUser(new Usuario(edtUsername.getText().toString(), edtPassword.getText().toString()));
-                    Toast.makeText(MainActivity.this, "Added User", Toast.LENGTH_SHORT).show();
-                    edtUsername.setText("");
-                    edtPassword.setText("");
-                } else {
-                    Toast.makeText(MainActivity.this, "Empty Fields", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!emptyValidation()) {
+//                    dbHelper.addUser(new Usuario(edtUsername.getText().toString(), edtPassword.getText().toString()));
+//                    Toast.makeText(MainActivity.this, "Added User", Toast.LENGTH_SHORT).show();
+//                    edtUsername.setText("");
+//                    edtPassword.setText("");
+//                } else {
+//                    Toast.makeText(MainActivity.this, "Empty Fields", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
     }
 

@@ -59,6 +59,8 @@ public class ProductoFragment extends Fragment {
     }
 
     private void initView(View view) {
+
+        ((NavigationActivity) getActivity()).getSupportActionBar().setTitle("Precios");
         edtSku = view.findViewById(R.id.edtSkuPrecio);
         edtPrecioCosto = view.findViewById(R.id.edtCostoPrecio);
         edtPrecioRvta = view.findViewById(R.id.edtMvtaPrecio);
@@ -66,7 +68,6 @@ public class ProductoFragment extends Fragment {
 
         recyclerViewProducto = view.findViewById(R.id.recyclerViewPrecio);
 
-        ((NavigationActivity) getActivity()).getSupportActionBar().setTitle("Precios");
 
     }
 
@@ -79,7 +80,6 @@ public class ProductoFragment extends Fragment {
 
         recyclerViewProducto.setItemAnimator(new DefaultItemAnimator());
         recyclerViewProducto.setHasFixedSize(true);
-
 
 
         adapter = new ProductoAdapter(listProducto, new ItemClickListener() {
@@ -131,9 +131,11 @@ public class ProductoFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
         ProductoSQL productoSQL = new ProductoSQL(getContext());
-        int tiendaId =  getArguments().getInt("tiendaId");
+        int tiendaId = getArguments().getInt("tiendaId");
         adapter.agregar(productoSQL.getProductoByTienda(tiendaId));
+
     }
 
 
