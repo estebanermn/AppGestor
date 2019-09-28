@@ -124,7 +124,6 @@ public class TiendaFragment extends Fragment {
         FragmentManager mFragmentManager = getFragmentManager();
         if (mFragmentManager != null) {
 
-
             Bundle args = new Bundle();
             args.putInt("tiendaId", tiendaId);
             newFragment.setArguments(args);
@@ -150,18 +149,18 @@ public class TiendaFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.add_tienda:
-                Intent intent = new Intent(getActivity(), TiendaFormActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//
+//            case R.id.add_tienda:
+//                Intent intent = new Intent(getActivity(), TiendaFormActivity.class);
+//                startActivity(intent);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     private void delete(int position) {
         listTienda.remove(position);

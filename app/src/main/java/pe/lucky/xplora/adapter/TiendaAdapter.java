@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,8 @@ import java.util.List;
 
 import pe.lucky.xplora.R;
 import pe.lucky.xplora.activity.MapaFragment;
+import pe.lucky.xplora.activity.MapsActivity;
+import pe.lucky.xplora.activity.ProductoFormActivity;
 import pe.lucky.xplora.model.Tienda;
 
 public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder> {
@@ -71,6 +74,8 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
             public void onClick(View v) {
                 Toast.makeText(context, "termina :  " + position, Toast.LENGTH_SHORT).show();
                 int tiendaId = listTienda.get(position).getTiendaId();
+
+
                 replaceFragmentMapa(v, tiendaId);
             }
         });
@@ -81,15 +86,20 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
 
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
 
-        Fragment myFragment = new MapaFragment();
+        Fragment myFragment = new MapsActivity();
         Bundle args = new Bundle();
         args.putInt("tiendaId", tiendaId);
         myFragment.setArguments(args);
 
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, myFragment).addToBackStack(null).commit();
 
-
     }
+
+//    private void replaceFragmentMapa(View v , int tiendaId){
+//        Intent intent = new Intent(context, MapsActivity.class);
+//        intent.putExtra("productoId", tiendaId);
+//        context.startActivity(intent);
+//    }
 
     @Override
     public int getItemCount() {
