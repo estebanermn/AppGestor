@@ -10,7 +10,7 @@
     <application
         android:allowBackup="true"
         android:appComponentFactory="something"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_persona"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -28,13 +28,17 @@
 
         <activity
             android:name=".activity.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps">
+
+        </activity>
         <activity android:name=".activity.TiendaFormActivity" />
         <activity android:name=".activity.ProductoFormActivity" />
+
         <activity
             android:name=".activity.NavigationActivity"
             android:label="@string/title_activity_navigation"
             android:theme="@style/AppTheme.NoActionBar">
+
 
         </activity>
         <activity android:name=".activity.MainActivity">

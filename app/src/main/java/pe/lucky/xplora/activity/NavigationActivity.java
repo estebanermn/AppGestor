@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import pe.lucky.xplora.R;
@@ -33,6 +34,9 @@ public class NavigationActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -42,9 +46,9 @@ public class NavigationActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        View headerView = navigationView.getHeaderView( 0 );
-        txtNombreUsuario = (TextView) headerView.findViewById( R.id.txtNombreUsuario );
-        txtEmailUsuario = (TextView) headerView.findViewById( R.id.txtEmailUsuario );
+        View headerView = navigationView.getHeaderView(0);
+        txtNombreUsuario = (TextView) headerView.findViewById(R.id.txtNombreUsuario);
+        txtEmailUsuario = (TextView) headerView.findViewById(R.id.txtEmailUsuario);
 
         Intent i = getIntent();
         Usuario usuario = (Usuario) i.getSerializableExtra("usuario");
@@ -78,6 +82,10 @@ public class NavigationActivity extends AppCompatActivity
             adminFragment.beginTransaction().replace(R.id.contenedor, new TiendaFragment()).commit();
 
         } else if (id == R.id.nav_salir) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            Toast.makeText(this, "Cerrando Sesision", Toast.LENGTH_SHORT).show();
 
         }
 

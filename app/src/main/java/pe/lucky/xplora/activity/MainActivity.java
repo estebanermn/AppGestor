@@ -1,6 +1,5 @@
 package pe.lucky.xplora.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import pe.lucky.xplora.sqlite.DataBaseHelper;
 import pe.lucky.xplora.R;
 import pe.lucky.xplora.model.Usuario;
 import pe.lucky.xplora.sqlite.UsuarioSQL;
@@ -38,21 +36,22 @@ public class MainActivity extends AppCompatActivity {
 
                 UsuarioSQL usuarioSQL = new UsuarioSQL(getApplicationContext());
                 if (!emptyValidation()) {
-                    Usuario usuario = usuarioSQL.queryUser(edtUsername.getText().toString(), edtPassword.getText().toString());
-                    if (usuario != null) {
+                    try {
+                        Usuario usuario = usuarioSQL.queryUser(edtUsername.getText().toString(), edtPassword.getText().toString());
+                        if (usuario != null) {
+                            Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
+                            intent.putExtra("usuario", usuario);
+                            startActivity(intent);
 
+                            Toast.makeText(MainActivity.this, "Bienvenido " + usuario.getNombre(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Usuario no encontrado" + usuario.getUsername(), Toast.LENGTH_SHORT).show();
+                            edtPassword.setText("");
+                        }
 
-                        Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable("usuario", usuario);
-//                        intent.putExtras(bundle);
-                        intent.putExtra("usuario", usuario);
-                        startActivity(intent);
+                    }catch (Exception e){
 
-                        Toast.makeText(MainActivity.this, "Bienvenido " + usuario.getNombre(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(MainActivity.this, "Usuario no encontrado" + usuario.getUsername(), Toast.LENGTH_SHORT).show();
-                        edtPassword.setText("");
+                        Toast.makeText(MainActivity.this, "Usuario no encontrado" , Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(MainActivity.this, "Campos vacíos", Toast.LENGTH_SHORT).show();

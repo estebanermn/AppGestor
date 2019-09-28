@@ -9,11 +9,9 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="173dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="2dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +23,9 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <ImageButton
                 android:id="@+id/imageButton3"
@@ -78,138 +78,125 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.503" />
 
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorAccent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8"
-                tools:layout_editor_absoluteX="0dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="100dp"
+                android:layout_height="34dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/darker_gray"
+                android:gravity="center"
+                android:text="@string/txt_sku_precio"
+                android:textAlignment="center"
+                android:textColor="#0A0A0A"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.027"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="105dp"
-                        android:layout_height="37dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="267dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@android:color/darker_gray"
-                        android:gravity="center"
-                        android:text="@string/txt_sku_precio"
-                        android:textAlignment="center"
-                        android:textColor="#0A0A0A"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintVertical_bias="0.562" />
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="80dp"
+                android:layout_height="34dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/darker_gray"
+                android:gravity="center"
+                android:text="@string/txt_costo_precio"
+                android:textAlignment="center"
+                android:textColor="#0A0A0A"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.388"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="80dp"
-                        android:layout_height="37dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="179dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@android:color/darker_gray"
-                        android:gravity="center"
-                        android:text="@string/txt_costo_precio"
-                        android:textAlignment="center"
-                        android:textColor="#0A0A0A"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintVertical_bias="0.562" />
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="80dp"
+                android:layout_height="34dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/darker_gray"
+                android:gravity="center"
+                android:text="@string/txt_rvta_precio"
+                android:textAlignment="center"
+                android:textColor="#0A0A0A"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.689"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
-                    <TextView
-                        android:id="@+id/textView11"
-                        android:layout_width="70dp"
-                        android:layout_height="37dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="95dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@android:color/darker_gray"
-                        android:gravity="center"
-                        android:text="@string/txt_rvta_precio"
-                        android:textAlignment="center"
-                        android:textColor="#0A0A0A"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/textView12"
-                        app:layout_constraintVertical_bias="0.562" />
-
-                    <TextView
-                        android:id="@+id/textView12"
-                        android:layout_width="75dp"
-                        android:layout_height="38dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="13dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@android:color/darker_gray"
-                        android:gravity="center"
-                        android:text="@string/txt_stock_precio"
-                        android:textAlignment="center"
-                        android:textColor="#0A0A0A"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintVertical_bias="0.562" />
-                </RelativeLayout>
-
-            </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="80dp"
+                android:layout_height="34dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/darker_gray"
+                android:gravity="center"
+                android:text="@string/txt_stock_precio"
+                android:textAlignment="center"
+                android:textColor="#0A0A0A"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.964"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
 
         </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/linearLayout2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="515dp"
+        android:layout_marginTop="192dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.193"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewPrecio"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="8dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
         </android.support.v7.widget.RecyclerView>
-
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
