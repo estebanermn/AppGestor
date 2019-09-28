@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-
 import pe.lucky.xplora.model.Tienda;
 import pe.lucky.xplora.util.Constantes;
 
@@ -19,7 +18,7 @@ public class TiendaSQL {
         conexion = new DataBaseHelper(context);
     }
 
-    public ArrayList<Tienda> listarTienda() {
+    public ArrayList<Tienda> getTienda() {
         ArrayList<Tienda> lista = new ArrayList<>();
         SQLiteDatabase db = conexion.getReadableDatabase();
         Cursor cursor = db.rawQuery
@@ -44,7 +43,7 @@ public class TiendaSQL {
         return lista;
     }
 
-    public void agregarTienda(Tienda tienda) {
+    public void create(Tienda tienda) {
         SQLiteDatabase db = conexion.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constantes.COLUMN_TIENDA_NOMBRE, tienda.getNombre());
@@ -54,7 +53,7 @@ public class TiendaSQL {
         db.insert(Constantes.TABLE_TIENDA, null, contentValues);
     }
 
-    public void actualizarTienda(Tienda tienda) {
+    public void update(Tienda tienda) {
         SQLiteDatabase db = conexion.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constantes.COLUMN_TIENDA_NOMBRE, tienda.getNombre());
@@ -65,11 +64,47 @@ public class TiendaSQL {
                 new String[]{String.valueOf(tienda.getTiendaId())});
     }
 
-    public void eliminarTienda(int idTienda) {
+    public void delete(int idTienda) {
         SQLiteDatabase db = conexion.getWritableDatabase();
         db.delete(Constantes.TABLE_TIENDA,
                 "" + Constantes.COLUMN_TIENDA_ID + "=?",
                 new String[]{String.valueOf(idTienda)});
+    }
+
+
+    public Tienda getTiendaById(int tiendaId) {
+
+        Tienda tienda = new Tienda();
+
+        SQLiteDatabase db = conexion.getReadableDatabase();
+
+        Cursor cursor = null;
+        String query = "select * from " + Constantes.TABLE_TIENDA + " where " + Constantes.COLUMN_TIENDA_ID + " =?";
+
+        try {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(tiendaId)});
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                tienda = new Tienda(
+                        cursor.getInt(
+                                cursor.getColumnIndex(Constantes.COLUMN_TIENDA_ID)),
+                        cursor.getString(
+                                cursor.getColumnIndex(Constantes.COLUMN_TIENDA_NOMBRE)),
+                        cursor.getString(
+                                cursor.getColumnIndex(Constantes.COLUMN_TIENDA_DIRECCION)),
+                        cursor.getString(
+                                cursor.getColumnIndex(Constantes.COLUMN_TIENDA_LONGITUD)),
+                        cursor.getString(
+                                cursor.getColumnIndex(Constantes.COLUMN_TIENDA_LATITUD))
+                );
+            }
+
+        } finally {
+            cursor.close();
+        }
+
+        return tienda;
     }
 
 

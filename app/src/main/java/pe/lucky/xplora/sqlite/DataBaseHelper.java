@@ -13,7 +13,7 @@ import pe.lucky.xplora.util.Constantes;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
 
-    public static final int DATABASE_VERSION = 19;
+    public static final int DATABASE_VERSION = 20;
     // Database Version
 
     // Database Name
@@ -31,6 +31,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(Constantes.CREATE_USER_TABLE);
         db.execSQL(Constantes.CREATE_TIENDA_TABLE);
         db.execSQL(Constantes.CREATE_PRODUCTO_TABLE);
+
+        db.execSQL("INSERT INTO " + Constantes.TABLE_USER + " (username, password) VALUES ('admin', 'admin')");
 
         db.execSQL("INSERT INTO " + Constantes.TABLE_TIENDA + " (nombre,direccion) VALUES ('Bodega Paquita', 'Av. Perú # 1350- San Martin de Porres')");
         db.execSQL("INSERT INTO " + Constantes.TABLE_TIENDA + " (nombre,direccion) VALUES ('Metro Yzaguirre', 'Av. Perú # 2660- San Martin de Porres')");

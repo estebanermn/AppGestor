@@ -17,6 +17,9 @@ public class Tienda {
         this.longitud = longitud;
     }
 
+    public Tienda() {
+    }
+
     public int getTiendaId() {
         return tiendaId;
     }

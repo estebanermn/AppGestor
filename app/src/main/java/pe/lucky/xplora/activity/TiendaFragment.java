@@ -14,20 +14,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pe.lucky.xplora.sqlite.DataBaseHelper;
 import pe.lucky.xplora.R;
-import pe.lucky.xplora.adapter.ItemClickListener;
 import pe.lucky.xplora.adapter.TiendaAdapter;
 import pe.lucky.xplora.model.Tienda;
 import pe.lucky.xplora.sqlite.TiendaSQL;
@@ -35,7 +33,7 @@ import pe.lucky.xplora.sqlite.TiendaSQL;
 import static android.support.constraint.Constraints.TAG;
 
 
-public class TiendaFragment extends Fragment implements View.OnClickListener {
+public class TiendaFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -48,8 +46,6 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
     private List<Tienda> listTienda;
     RecyclerView recyclerViewTienda;
     private TiendaAdapter adapter;
-
-    DataBaseHelper conn;
 
     private OnFragmentInteractionListener mListener;
 
@@ -92,6 +88,7 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
         recyclerViewTienda = view.findViewById(R.id.recyclerViewTienda);
         initObjects();
 
+
     }
 
     private void initObjects() {
@@ -102,32 +99,41 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
 
         recyclerViewTienda.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTienda.setHasFixedSize(true);
+        registerForContextMenu(recyclerViewTienda);
 
-        adapter = new TiendaAdapter(listTienda, new ItemClickListener() {
+        adapter = new TiendaAdapter(listTienda, getContext(), new TiendaAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
-                Log.d(TAG, "clicked position:" + position);
-                long postId = listTienda.get(position).getTiendaId();
-//                Intent intent = new Intent(getContext(), ProductoActivity.class);
-//                getContext().startActivity(intent);
-                replaceFragment();
+            public void onItemClick(View view, int position) {
 
+                Log.d(TAG, "clicked position:" + position);
+                int tiendaId = listTienda.get(position).getTiendaId();
+
+                adapter.notifyItemChanged(position);
+                replaceFragment(tiendaId);
             }
         });
+
 
         recyclerViewTienda.setAdapter(adapter);
 
     }
 
-    private void replaceFragment() {
+    private void replaceFragment(int tiendaId) {
         Fragment newFragment = new ProductoFragment();
 
         FragmentManager mFragmentManager = getFragmentManager();
         if (mFragmentManager != null) {
+
+
+            Bundle args = new Bundle();
+            args.putInt("tiendaId", tiendaId);
+            newFragment.setArguments(args);
+
             FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.contenedor, newFragment);
             mFragmentTransaction.addToBackStack(null);
             mFragmentTransaction.commit();
+
         }
     }
 
@@ -135,7 +141,7 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         TiendaSQL tiendaSQL = new TiendaSQL(getContext());
-        adapter.agregar(tiendaSQL.listarTienda());
+        adapter.agregar(tiendaSQL.getTienda());
     }
 
     @Override
@@ -152,13 +158,14 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), TiendaFormActivity.class);
                 startActivity(intent);
                 return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return false;
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
+    private void delete(int position) {
+        listTienda.remove(position);
+        adapter.notifyItemRemoved(position);
     }
 
 
@@ -184,11 +191,6 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
 

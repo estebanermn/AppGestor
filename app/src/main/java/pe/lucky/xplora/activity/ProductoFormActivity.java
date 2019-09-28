@@ -1,7 +1,6 @@
 package pe.lucky.xplora.activity;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,16 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import pe.lucky.xplora.sqlite.DataBaseHelper;
 import pe.lucky.xplora.R;
 import pe.lucky.xplora.model.Producto;
 import pe.lucky.xplora.sqlite.ProductoSQL;
-import pe.lucky.xplora.util.Constantes;
 
 public class ProductoFormActivity extends AppCompatActivity {
 
     EditText edtSkuProducto, edtPrecioCostoProducto, edtPrecioRvtaProducto, edtStockProducto;
     Button btnGuardarProducto;
+   /// Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +59,6 @@ public class ProductoFormActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // verificar si productoId existe,
-
-        // si existe, carga el producto objetoidProducto
-        // sino, es uno nuevo.
-
         btnGuardarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,13 +72,13 @@ public class ProductoFormActivity extends AppCompatActivity {
                 ProductoSQL productoSQL = new ProductoSQL(getApplicationContext());
                 int idProducto = (int) btnGuardarProducto.getTag();
                 if (idProducto == 0) {
-                    productoSQL.agregarProducto(objPersona);
+                    productoSQL.create(objPersona);
                     Toast.makeText(ProductoFormActivity.this,
                             "Se registró correctamente",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     objPersona.setProductoId(idProducto);
-                    productoSQL.actualizarProducto(objPersona);
+                    productoSQL.update(objPersona);
                     Toast.makeText(ProductoFormActivity.this,
                             "Se actualizó correctamente",
                             Toast.LENGTH_SHORT).show();

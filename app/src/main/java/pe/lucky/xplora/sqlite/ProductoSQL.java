@@ -4,9 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+
 
 import java.util.ArrayList;
+
 
 import pe.lucky.xplora.model.Producto;
 import pe.lucky.xplora.util.Constantes;
@@ -20,11 +21,12 @@ public class ProductoSQL {
         conexion = new DataBaseHelper(context);
     }
 
-    public ArrayList<Producto> listarProducto() {
+    public ArrayList<Producto> getProductoByTienda(int tiendaId) {
         ArrayList<Producto> lista = new ArrayList<>();
         SQLiteDatabase db = conexion.getReadableDatabase();
+        String query = "select * from " + Constantes.TABLE_PRODUCTO + " where " + Constantes.COLUMN_PRODUCTO_TIENDA_ID + " =?";
         Cursor cursor = db.rawQuery
-                ("select * from " + Constantes.TABLE_PRODUCTO + "", null);
+                (query, new String[]{String.valueOf(tiendaId)});
         if (cursor.moveToFirst()) {
             do {
                 Producto producto = new Producto(
@@ -47,7 +49,7 @@ public class ProductoSQL {
         return lista;
     }
 
-    public void agregarProducto(Producto producto) {
+    public void create(Producto producto) {
         SQLiteDatabase db = conexion.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constantes.COLUMN_PRODUCTO_SKU, producto.getSku());
@@ -58,7 +60,7 @@ public class ProductoSQL {
         db.insert(Constantes.TABLE_PRODUCTO, null, contentValues);
     }
 
-    public void actualizarProducto(Producto producto) {
+    public void update(Producto producto) {
         SQLiteDatabase db = conexion.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constantes.COLUMN_PRODUCTO_SKU, producto.getSku());
@@ -73,7 +75,7 @@ public class ProductoSQL {
 
     }
 
-    public void eliminarProducto(int idProducto) {
+    public void delete(int idProducto) {
         SQLiteDatabase db = conexion.getWritableDatabase();
         db.delete(Constantes.TABLE_PRODUCTO,
                 "" + Constantes.COLUMN_PRODUCTO_ID + "=?",
@@ -90,7 +92,7 @@ public class ProductoSQL {
         String query = "select * from " + Constantes.TABLE_PRODUCTO + " where " + Constantes.COLUMN_PRODUCTO_ID + " =?";
 
         try {
-            cursor = db.rawQuery( query, new String[]{ String.valueOf(productoId) });
+            cursor = db.rawQuery(query, new String[]{String.valueOf(productoId)});
 
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();

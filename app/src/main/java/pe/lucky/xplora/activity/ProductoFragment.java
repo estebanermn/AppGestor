@@ -39,7 +39,6 @@ public class ProductoFragment extends Fragment {
     RecyclerView recyclerViewProducto;
     private ProductoAdapter adapter;
 
-
     public ProductoFragment() {
     }
 
@@ -56,6 +55,7 @@ public class ProductoFragment extends Fragment {
         setHasOptionsMenu(true);
         initView(view);
         initObjects();
+
     }
 
     private void initView(View view) {
@@ -80,6 +80,8 @@ public class ProductoFragment extends Fragment {
         recyclerViewProducto.setItemAnimator(new DefaultItemAnimator());
         recyclerViewProducto.setHasFixedSize(true);
 
+
+
         adapter = new ProductoAdapter(listProducto, new ItemClickListener() {
             @Override
             public void onItemClick(View v, final int position) {
@@ -95,9 +97,7 @@ public class ProductoFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(getContext(), ProductoFormActivity.class);
                                 intent.putExtra("productoId", producto.getProductoId());
-                                System.out.println("id: " + producto.getProductoId());
-                                Toast.makeText(getContext(), "Producto:" + producto.getSku(), Toast.LENGTH_LONG).show();
-//                                intent.putExtra("tiendaId", producto.getTiendaId());
+
                                 getContext().startActivity(intent);
                             }
                         });
@@ -106,7 +106,7 @@ public class ProductoFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ProductoSQL productoSQL = new ProductoSQL(getContext());
-                                productoSQL.eliminarProducto(producto.getProductoId());
+                                productoSQL.delete(producto.getProductoId());
                                 listProducto.remove(position);
                                 adapter.notifyDataSetChanged();
                             }
@@ -132,7 +132,8 @@ public class ProductoFragment extends Fragment {
     public void onStart() {
         super.onStart();
         ProductoSQL productoSQL = new ProductoSQL(getContext());
-        adapter.agregar(productoSQL.listarProducto());
+        int tiendaId =  getArguments().getInt("tiendaId");
+        adapter.agregar(productoSQL.getProductoByTienda(tiendaId));
     }
 
 
